@@ -116,6 +116,32 @@
     <script>
         // CSV file URL
         const CSV_URL = 'https://drive.google.com/uc?export=download&id=1J8Z2UTv2NyjsGiHEE180IgJUbyi8qusL';
+// Add this to your script section
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing code
+    fetchSheetData().catch(error => {
+        console.error("API Error:", error);
+        alert("Error loading data. Check console for details.");
+    });
+});
+
+// Modify your fetch function with proper headers
+async function fetchSheetData() {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'Referer': window.location.href,
+                'Origin': window.location.origin
+            }
+        });
+        // ... rest of your code
+    } catch (error) {
+        console.error("Fetch error:", error);
+        throw error;
+    }
+}
         
         // DOM elements
         const searchInput = document.getElementById('searchInput');
